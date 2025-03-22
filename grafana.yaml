@@ -1,0 +1,28 @@
+image:
+  repository: grafana/grafana
+  tag: latest
+  pullPolicy: IfNotPresent
+
+resources:
+  requests:
+    cpu: 10m       # Reduced CPU request
+    memory: 48Mi    # Reduced memory request
+  limits:
+    cpu: 50m       # Reduced CPU limit
+    memory: 64Mi   # Reduced memory limit
+
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+    - name: Loki
+      type: loki
+      url: http://loki-gateway.loki.svc.cluster.local
+      access: proxy
+      isDefault: false
+      editable: true
+
+service:
+  type: LoadBalancer
+  port: 80
+
